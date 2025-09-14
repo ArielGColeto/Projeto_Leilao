@@ -14,12 +14,11 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.SQLException;
+import java.sql.*;
 
 
 public class ProdutosDAO {
-    ResultSet resultset;
-    ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-    
+   
     public void cadastrarProduto (ProdutosDTO produto)
     {
         try{
@@ -42,8 +41,29 @@ public class ProdutosDAO {
     }
 
     public ArrayList<ProdutosDTO> listarProdutos(){
-        
-        return listagem;
+        ArrayList<ProdutosDTO> produtos = new ArrayList<>();
+        try
+        {
+            conectaDAO connect = new conectaDAO();
+            Connection conn = connect.connectDB();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id, nome, valor, status FROM produtos");
+            
+            while(rs.next())
+            {
+                ProdutosDTO p = new ProdutosDTO(rs.getInt("id"), rs.getString("nome"), rs.getInt("valor"), rs.getString("status"));
+                produtos.add(p);   
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            
+        }catch(SQLException e)
+        { 
+            e.printStackTrace();
+        }
+                
+        return produtos;
     }
     
     
