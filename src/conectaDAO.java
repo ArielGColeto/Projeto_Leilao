@@ -16,22 +16,8 @@ import javax.swing.JOptionPane;
  * @author Adm
  */
 public class conectaDAO {
-<<<<<<< HEAD
-    
-    public Connection connectDB(){
-        Connection conn = null;
-        
-        try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
-            
-        } catch (SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
-        }
-        return conn;
-    }
-    
-=======
+
+
      private static final String URL = "jdbc:mysql://localhost:3306/leilao?useSSL=false&serverTimezone=UTC"; 
      private static final String USUARIO = "root";
      private static final String SENHA = "4RI3L123";
@@ -44,5 +30,5 @@ public class conectaDAO {
     
     
     
->>>>>>> 5c9423b (Commit #1: Botao de cadastro agora tem funcionalidade)
+
 }
