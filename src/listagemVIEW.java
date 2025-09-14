@@ -150,11 +150,22 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+<<<<<<< HEAD
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
+=======
+        cadastroVIEW cad = new cadastroVIEW();
+        cad.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    /**
+     * @param args the command line 
+>>>>>>> 5c9423b (Commit #1: Botao de cadastro agora tem funcionalidade)
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
