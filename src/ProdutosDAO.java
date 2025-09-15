@@ -17,7 +17,8 @@ import java.sql.SQLException;
 import java.sql.*;
 
 
-public class ProdutosDAO {
+public class ProdutosDAO 
+{
    
     public void cadastrarProduto (ProdutosDTO produto)
     {
@@ -40,7 +41,8 @@ public class ProdutosDAO {
         }
     }
 
-    public ArrayList<ProdutosDTO> listarProdutos(){
+    public ArrayList<ProdutosDTO> listarProdutos()
+    {
         ArrayList<ProdutosDTO> produtos = new ArrayList<>();
         try
         {
@@ -66,8 +68,50 @@ public class ProdutosDAO {
         return produtos;
     }
     
-    
-    
+    public void venderProdutos(int id)
+    {
+        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
         
+        try (Connection conn = new conectaDAO().connectDB();PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setInt(1, id);
+            int updt = stmt.executeUpdate();
+            if (updt > 0)
+            {
+                JOptionPane.showMessageDialog(null,"Atualizado com sucesso");
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "Nenhum produto encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null,"Erro na conexão:\n" + ex.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos()
+    {
+        ArrayList<ProdutosDTO> produtos = new ArrayList<>();
+        try
+        {
+            conectaDAO connect = new conectaDAO();
+            Connection conn = connect.connectDB();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM produtos WHERE status = 'vendido'");
+            
+            while(rs.next())
+            {
+                ProdutosDTO p = new ProdutosDTO(rs.getInt("id"), rs.getString("nome"), rs.getInt("valor"), rs.getString("status"));
+                produtos.add(p);   
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        }catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null,"Erro "+ ex.getMessage());
+        }
+        return produtos;
+    }
 }
 
